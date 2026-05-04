@@ -1,0 +1,22 @@
+{
+    "markets": [
+        {
+            "id": 1,
+            "market_type": "Tower Grove",
+            "date": "2025-05-09",
+            "notes": "Test",
+            "assigned_staff": [
+                "534925713409703947",
+                "1500686706972557444"
+            ],
+            "channel_id": 1500868675740106802,
+            "message_id": 1500914834240311359
+        }
+    ],
+    "dashboards": [
+        {
+            "channel_id": 1500868675740106802,
+            "message_id": 1500915063459020881
+        }
+    ]
+}
