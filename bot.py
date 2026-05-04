@@ -55,7 +55,7 @@ async def sync_all_displays(guild: discord.Guild):
             inline=False
         )
 
-    # Sync Dashboard(s) - CRITICAL: Include view=DashboardView() here
+    # Sync Dashboard(s)
     for dash in db.get_dashboards():
         try:
             channel = guild.get_channel(dash["channel_id"]) or await guild.fetch_channel(dash["channel_id"])
@@ -107,7 +107,9 @@ class StaffSelectView(discord.ui.View):
 
 class CreateFlowView(discord.ui.View):
     @discord.ui.select(placeholder="Choose Market Type...", options=[
-        discord.SelectOption(label="Soulard"), discord.SelectOption(label="Tower Grove")
+        discord.SelectOption(label="Soulard"), 
+        discord.SelectOption(label="Tower Grove"),
+        discord.SelectOption(label="Other Event")
     ])
     async def select_type(self, interaction: discord.Interaction, select: discord.ui.Select):
         market_type = select.values[0]
@@ -144,7 +146,6 @@ class EditFlowView(discord.ui.View):
 
 @bot.tree.command(name="dashboard")
 async def dashboard(interaction: discord.Interaction):
-    # CRITICAL: Send initial message then sync
     msg = await interaction.channel.send("Initializing Dashboard...")
     db.add_dashboard(interaction.channel_id, msg.id)
     await sync_all_displays(interaction.guild)
@@ -152,7 +153,6 @@ async def dashboard(interaction: discord.Interaction):
 
 @bot.event
 async def on_ready():
-    # Persistence: Register the view
     bot.add_view(DashboardView())
     await bot.tree.sync()
     print("✅ Bot ready and DashboardView registered.")
